@@ -151,6 +151,12 @@ flight_df %>%
 flight_df %>%
   mutate(mean_distance=distance/hour, 
          ratio_delay=arr_delay/(hour*60+minute)) -> flght_df_mutate1
+
+flight_df_muatate3<-
+flight_df |> 
+  mutate(speed=distance/air_time*60)
+view(flight_df_muatate3)
+
 #ifelse를 활용하여 category변수 생성, ifelse(조건, 조건이 true일때, 조건이 false)
 flight_df %>%
   mutate(arr_delay_group=ifelse(arr_delay>0, "delay", "no delay")) ->flight_df_mutate
@@ -162,6 +168,8 @@ flight_df %>%
 # ------------------------------------------------------------------------------
 # 데이터 전처리 > dplyr의 주요 기능 > group_by와 summarise
 # ------------------------------------------------------------------------------
+
+str(flight_df_mutate$arr_delay_group)
 
 flight_df_mutate %>% 
   count(arr_delay_group)
@@ -187,6 +195,7 @@ flight_df_mutate %>%
             per20_s=quantile(arr_delay, 0,25),
             n_s=n())->final
 final
+view (fianal)
 
 
 # ------------------------------------------------------------------------------
@@ -246,9 +255,10 @@ data2
 data1 %>% 
   left_join(data2, by= "id") ->left2
 data1 %>% 
-  left_join(data2, by="id", suffix=c("_data1", "data2")) -> left3
+  left_join(data2, by="id", suffix=c("_data1", "_data2")) -> left3
 
-
+view(left2)
+view(left3)
 
 # ------------------------------------------------------------------------------
 # 데이터 전처리 > 데이터 결합하기 > join으로 데이터 결합하기 > right_join :두번째 데이터를 기준으로 결합
